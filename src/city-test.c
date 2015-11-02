@@ -18,22 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <cstdio>
-#include <iostream>
+#include <stdio.h>
 #include <string.h>
 #include "city.h"
 #ifdef __SSE4_2__
 #include "citycrc.h"
 #endif
 
-using std::cout;
-using std::cerr;
-using std::hex;
-
 static const uint64 k0 = 0xc3a5c85c97cb3127ULL;
 static const uint64 kSeed0 = 1234567;
 static const uint64 kSeed1 = k0;
-static const uint128 kSeed128(kSeed0, kSeed1);
+static const uint128 kSeed128 = { .first = 1234567, .second = 0xc3a5c85c97cb3127ULL };
 static const int kDataSize = 1 << 20;
 static const int kTestSize = 300;
 
@@ -1263,7 +1258,7 @@ C(5398210c)},
 
 void Check(uint64 expected, uint64 actual) {
   if (expected != actual) {
-    cerr << "ERROR: expected 0x" << hex << expected << ", but got 0x" << actual << "\n";
+    fprintf( stderr, "ERROR: expected %llx, but got %llx\n", expected, actual);
     ++errors;
   }
 }

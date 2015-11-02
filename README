@@ -1,4 +1,5 @@
 CityHash, a family of hash functions for strings.
+	ported to C (Nat! - 2015 Mulle kybernetiK)
 
 
 Introduction
