@@ -27,7 +27,10 @@
 // possible hash functions, by using SIMD instructions, or by
 // compromising on hash quality.
 
-#include "config.h"
+// on windows, configure messes up size_t
+#ifndef _WIN32
+# include "config.h"
+#endif
 
 #include <city.h>
 #include <string.h>  // for memcpy and memset
