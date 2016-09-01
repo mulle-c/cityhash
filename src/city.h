@@ -64,15 +64,35 @@
 
 #include <stdlib.h>  // for size_t.
 #include <stdint.h>
-#include <utility>
 
+// (nat) superflous typedefs, sigh
 typedef uint8_t uint8;
 typedef uint32_t uint32;
 typedef uint64_t uint64;
-typedef std::pair<uint64, uint64> uint128;
 
-inline uint64 Uint128Low64(const uint128& x) { return x.first; }
-inline uint64 Uint128High64(const uint128& x) { return x.second; }
+typedef struct
+{
+#ifdef __BIG_ENDIAN__
+	uint64_t   second;
+	uint64_t   first;
+#else
+	uint64_t   first;
+	uint64_t   second;
+#endif
+} uint128;
+
+static inline uint128   uint128_make( uint64 first, uint64 second)
+{
+	uint128   rval;
+
+	rval.first  = first;
+	rval.second = second;
+	return( rval);
+}
+
+
+static inline uint64 Uint128Low64(const uint128 x) { return x.first; }
+static inline uint64 Uint128High64(const uint128 x) { return x.second; }
 
 // Hash function for a byte array.
 uint64 CityHash64(const char *buf, size_t len);
@@ -98,7 +118,7 @@ uint32 CityHash32(const char *buf, size_t len);
 
 // Hash 128 input bits down to 64 bits of output.
 // This is intended to be a reasonably good hash function.
-inline uint64 Hash128to64(const uint128& x) {
+static inline uint64 Hash128to64(const uint128 x) {
   // Murmur-inspired hashing.
   const uint64 kMul = 0x9ddfea08eb382d69ULL;
   uint64 a = (Uint128Low64(x) ^ Uint128High64(x)) * kMul;

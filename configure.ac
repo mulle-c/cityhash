@@ -26,8 +26,8 @@ AC_ARG_ENABLE([sse4.2],
 AM_CONDITIONAL([SSE42], [test x$cityhash_sse42 = xtrue ])
 
 # Checks for programs.
-AC_PROG_CXX
-AC_LANG([C++])
+AC_PROG_CC
+AC_LANG([C])
 AC_C_BIGENDIAN
 
 # Checks for libraries.
@@ -66,7 +66,7 @@ echo \
 ${PACKAGE_NAME} Version ${PACKAGE_VERSION}
 
 Prefix: '${prefix}'.
-Compiler: '${CXX} ${CXXFLAGS}'
+Compiler: '${CC} ${CFLAGS}'
 
 Now type 'make @<:@<target>@:>@'
   where the optional <target> is:
