@@ -27,10 +27,10 @@
 
 static const uint64 k0 = 0xc3a5c85c97cb3127ULL;
 static const uint64 kSeed0 = 1234567;
-static const uint64 kSeed1 = k0;
+static const uint64 kSeed1 = 0xc3a5c85c97cb3127ULL;
 static const uint128 kSeed128 = { .first = 1234567, .second = 0xc3a5c85c97cb3127ULL };
-static const int kDataSize = 1 << 20;
-static const int kTestSize = 300;
+#define kDataSize (1 << 20)
+#define kTestSize 300
 
 static char data[kDataSize];
 
@@ -1258,7 +1258,9 @@ C(5398210c)},
 
 void Check(uint64 expected, uint64 actual) {
   if (expected != actual) {
-    fprintf( stderr, "ERROR: expected %llx, but got %llx\n", expected, actual);
+    fprintf( stderr, "ERROR: expected %llx, but got %llx\n",
+      (unsigned long long) expected,
+      (unsigned long long) actual);
     ++errors;
   }
 }
